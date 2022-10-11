@@ -13,6 +13,6 @@ class Config:
     train = True
     target_cols=['cohesion', 'syntax', 'vocabulary', 'phraseology', 'grammar', 'conventions']
     lr = 1e-5
-    
+    token = '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'
 
 
