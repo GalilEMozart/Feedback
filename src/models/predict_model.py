@@ -1,5 +1,5 @@
 import torch
-from transformers import BertModel
+from transformers import AutoModel
 from torch import nn 
 from torch.optim import Adam
 from tqdm import tqdm
@@ -11,14 +11,17 @@ class FeedbackModel(nn.Module):
     def __init__(self, dropout=0.1):
 
         super(FeedbackModel, self).__init__()
-        self.bert = BertModel.from_pretrained(Config.model_name)
+
+        self.bert = AutoModel.from_pretrained(Config.checkpoint)
         self.dropout = nn.Dropout(dropout)
         self.linear = nn.Linear(1024,256)
         self.relu = nn.ReLU()
         self.out = nn.Linear(256,6)
 
-    def forward(self, input_id, mask):
-        _, x = self.bert(input_ids = input_id, attention_mask = mask, return_dict = False)
+    def forward(self, input_id):
+
+        output = self.bert(**input_id)
+        print(output)
         x = self.dropout(x)
         x = self.linear(x)
         x = self.relu(x)

@@ -29,7 +29,7 @@ def main(input_filepath, output_filepath):
 
     kf = KFold(n_splits = Config.n_fold)
     for num_fold, (_, val_) in tqdm(enumerate(kf.split(X=df))):
-        df.loc[val_, 'kfold'] = num_fold
+        df.loc[val_, 'kfold'] = int(num_fold)
 
     df['kfold'] = df['kfold'].astype(int)
     df.to_csv(output_filepath, index= False)
